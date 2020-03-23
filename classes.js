@@ -29,8 +29,20 @@
   Call your class Employee and receive all the data in the constructor in the order listed above.
 */
 
-//Code Here
+function Employee(first_name, last_name, email, age){
+  this.first_name = first_name;
+  this.last_name = last_name
+  this.email = email
+  this.age = age
+}
 
+Employee.prototype.makeWidget = function(){
+  return `${this.first_name} ${this.last_name} Widget`
+}
+
+const employee = new Employee('Dave', 'Smith', 'dsmith@gmail.com', 35)
+
+employee.makeWidget()
 
 ////////// PROBLEM 2 //////////
 
@@ -47,7 +59,16 @@
   Call your new class Manager
 */
 
-//Code Here
+class Manager extends Employee {
+  constructor(first_name, last_name, email, age){
+  super(first_name,last_name, email, age)
+  this.reports = []
+
+}
+}
+
+
+
 
 
 ////////// PROBLEM 3 //////////
