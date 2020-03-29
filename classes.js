@@ -29,20 +29,19 @@
   Call your class Employee and receive all the data in the constructor in the order listed above.
 */
 
-function Employee(first_name, last_name, email, age){
-  this.first_name = first_name;
+class Employee {
+  constructor(first_name, last_name, email, age){
+  this.first_name = first_name
   this.last_name = last_name
   this.email = email
   this.age = age
 }
-
-Employee.prototype.makeWidget = function(){
-  return `${this.first_name} ${this.last_name} Widget`
+makeWidget(){
+  return`${this.first_name} ${this.last_name} Widget` 
+}
 }
 
 const employee = new Employee('Dave', 'Smith', 'dsmith@gmail.com', 35)
-
-employee.makeWidget()
 
 ////////// PROBLEM 2 //////////
 
@@ -63,9 +62,20 @@ class Manager extends Employee {
   constructor(first_name, last_name, email, age){
   super(first_name,last_name, email, age)
   this.reports = []
+  }
+
+  hire(employee){
+    this.reports.push(employee)
+  }
+
+  fire(index){
+    this.reports = this.reports.slice(0, index).concat(this.reports.slice(index+1))
+  }
 
 }
-}
+
+const manager = new Manager('Bob', 'Burger', 'gooburger@yahoo.com', 45)
+
 
 
 
@@ -92,7 +102,39 @@ class Manager extends Employee {
   Call your new class ProgressiveManager
 */
 
-//Code Here
+class ProgressiveManager extends Manager{
+  constructor(first_name,last_name,email,age){
+    super(first_name, last_name, email, age)
+    //this.reports = []
+    this.title = 'Not a manager'
+    this.bonus = 0
+
+  }
+
+  updateTitle(){
+    var reportsLength = this.reports.length
+    if(reportsLength === 0){
+      this.title = 'Not a manager'
+    }else if (reportsLength >= 1 && reportsLength <= 3)this.title = 'Barely Manager'
+    else if(reportsLength >= 4 && reportsLength <= 10)this.title = 'Mostly Manager'
+    else if(reportsLength >= 11 && reportsLength <= 50)this.title ='Manager'
+    else if(reportsLength >= 51 && reportsLength <= 100)this.title = 'Manager Plus'
+    else if (reportsLength >= 101)
+    this.title = 'Bestest Manager'
+  }
+
+  hire(employee){
+    super.hire(employee)
+    this.updateTitle()
+
+  }
+
+  fire(index){
+    super.fire(index)
+    this.bonus += 100
+  }
+
+}
 
 
 
@@ -119,6 +161,28 @@ class Manager extends Employee {
         - The anonymous function should decrease wear_and_tear_count by 10, and set needs_reboot to false
 */
 
-//Code Here
+class Machine {
+  constructor(){
+    this.widgets_made_count = 0,
+    this.wear_and_tear_count = 0,
+    this.needs_reboot = false
+  }
 
+  makeWidgets(num){
+    this.widgets_made_count += num
+    this.wear_and_tear_count = this.widgets_made_count/50
+  }
 
+  fixMachine(){
+    this.needs_reboot = true
+  }
+
+  reboot(){
+    return () => {
+      this.wear_and_tear_count -= 10
+      this.needs_reboot = false
+    }
+  }
+}
+
+const machine = new Machine()
